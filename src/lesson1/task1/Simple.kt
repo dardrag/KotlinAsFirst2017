@@ -41,7 +41,7 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  */
 fun main(args: Array<String>) {
     // Решаем x^2 - 3*x + 2 = 0
-    val x1x2 = trackLength(4.0,0.0,0.0,3.0)
+    val x1x2 = thirdDigit(1234)
     println("Root product: $x1x2")
 }
 
@@ -90,7 +90,9 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
  * Пользователь задает целое число, большее 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = TODO()
+fun thirdDigit(number: Int): Int {
+    return (number / 100) % 10
+}
 
 /**
  * Простая
