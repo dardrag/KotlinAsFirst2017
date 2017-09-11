@@ -41,7 +41,7 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  */
 fun main(args: Array<String>) {
     // Решаем x^2 - 3*x + 2 = 0
-    val x1x2 = numberRevert(123);
+    val x1x2 = lengthInMeters(23,43,23)
     println("Root product: $x1x2")
 }
 
@@ -60,7 +60,9 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = 3600 * hours + 60 * m
  * Определить длину того же отрезка в метрах (в данном случае 18.98).
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
-fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double = TODO()
+fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double  {
+    return (sagenes * 48 + arshins * 16 + vershoks) * 4.445 / 100;
+}
 
 /**
  * Тривиальная
