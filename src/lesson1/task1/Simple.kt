@@ -41,7 +41,7 @@ fun quadraticRootProduct(a: Double, b: Double, c: Double): Double {
  */
 fun main(args: Array<String>) {
     // Решаем x^2 - 3*x + 2 = 0
-    val x1x2 = angleInRadian(36,14,35)
+    val x1x2 = trackLength(4.0,0.0,0.0,3.0)
     println("Root product: $x1x2")
 }
 
@@ -80,7 +80,9 @@ fun angleInRadian(grad: Int, min: Int, sec: Int): Double {
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = TODO()
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double {
+    return sqrt(sqr(x1-x2) + sqr(y1-y2))
+}
 
 /**
  * Простая
