@@ -38,7 +38,7 @@ fun main(args: Array<String>) {
 }
 fun ageDescription(age: Int): String {
     var str : String;
-    if ( age % 100 > 10 && age % 100 < 20) {
+    if ( age % 100 > 10 && age % 100 < 20 || age % 10 >= 5 && age % 10 < 10) {
         str = "лет"
     } else if (age % 10 == 0) {
         str = "лет"
