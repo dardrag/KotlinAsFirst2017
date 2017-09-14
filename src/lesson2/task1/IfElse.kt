@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task1
 
 import lesson1.task1.discriminant
@@ -9,23 +10,29 @@ import lesson1.task1.discriminant
  * Найти наименьший корень биквадратного уравнения ax^4 + bx^2 + c = 0
  */
 fun minBiRoot(a: Double, b: Double, c: Double): Double {
-    // 1: в главной ветке if выполняется НЕСКОЛЬКО операторов
-    if (a == 0.0) {
-        if (b == 0.0) return Double.NaN // ... и ничего больше не делать
-        val bc = -c / b
-        if (bc < 0.0) return Double.NaN // ... и ничего больше не делать
-        return -Math.sqrt(bc)
-        // Дальше функция при a == 0.0 не идёт
-    }
-    val d = discriminant(a, b, c)   // 2
-    if (d < 0.0) return Double.NaN  // 3
-    // 4
-    val y1 = (-b + Math.sqrt(d)) / (2 * a)
-    val y2 = (-b - Math.sqrt(d)) / (2 * a)
-    val y3 = Math.max(y1, y2)       // 5
-    if (y3 < 0.0) return Double.NaN // 6
-    return -Math.sqrt(y3)           // 7
+	// 1: в главной ветке if выполняется НЕСКОЛЬКО операторов
+	if (a == 0.0) {
+		if (b == 0.0) return Double.NaN // ... и ничего больше не делать
+		val bc = -c / b
+		if (bc < 0.0) return Double.NaN // ... и ничего больше не делать
+		return -Math.sqrt(bc)
+		// Дальше функция при a == 0.0 не идёт
+	}
+	val d = discriminant(a, b, c)   // 2
+	if (d < 0.0) return Double.NaN  // 3
+	// 4
+	val y1 = (-b + Math.sqrt(d)) / (2 * a)
+	val y2 = (-b - Math.sqrt(d)) / (2 * a)
+	val y3 = Math.max(y1, y2)       // 5
+	if (y3 < 0.0) return Double.NaN // 6
+	return -Math.sqrt(y3)           // 7
 }
+
+
+fun main(args: Array<String>) {
+	println(ageDescription(2))
+}
+
 
 /**
  * Простая
@@ -33,22 +40,16 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun main(args: Array<String>) {
-    println(ageDescription(2))
-}
 fun ageDescription(age: Int): String {
-    var str : String;
-    if ( age % 100 > 10 && age % 100 < 20 || age % 10 >= 5 && age % 10 < 10) {
-        str = "лет"
-    } else if (age % 10 == 0) {
-        str = "лет"
-    } else if (age % 10 == 1) {
-        str = "год"
-    } else {
-        str = "года"
-    }
-    str = age.toString() + " " + str
-    return str;
+	var str: String
+	when {
+		age % 100 in 10..20 || age % 10 in 5..9 -> str = "лет"
+		age % 10 == 0 -> str = "лет"
+		age % 10 == 1 -> str = "год"
+		else -> str = "года"
+	}
+	str = age.toString() + " " + str
+	return str
 }
 
 /**
@@ -59,23 +60,20 @@ fun ageDescription(age: Int): String {
  * Определить, за какое время он одолел первую половину пути?
  */
 fun timeForHalfWay(t1: Double, v1: Double,
-                   t2: Double, v2: Double,
-                   t3: Double, v3: Double): Double {
-    val half_dist = (t1*v1 + t2*v2 + t3*v3) / 2
-    val dist1 = t1*v1
-    val dist2 = t2*v2
-    val dist3 = t3*v3
-    var time : Double
-    if (half_dist == 0.0) {
-        time = 0.0
-    } else if (half_dist > dist1 + dist2) {
-        time = t1 + t2 + (dist3 - half_dist) / v3
-    } else if (half_dist > dist1) {
-        time = t1 + (half_dist - dist1) / v2
-    } else {
-        time = half_dist / v1
-    }
-    return time
+				   t2: Double, v2: Double,
+				   t3: Double, v3: Double): Double {
+	val half_dist = (t1 * v1 + t2 * v2 + t3 * v3) / 2
+	val dist1 = t1 * v1
+	val dist2 = t2 * v2
+	val dist3 = t3 * v3
+	var time: Double
+	when {
+		half_dist == 0.0 -> time = 0.0
+		half_dist > dist1 + dist2 -> time = t1 + t2 + (dist3 - half_dist) / v3
+		half_dist > dist1 -> time = t1 + (half_dist - dist1) / v2
+		else -> time = half_dist / v1
+	}
+	return time
 }
 
 /**
@@ -88,18 +86,16 @@ fun timeForHalfWay(t1: Double, v1: Double,
  * Считать, что ладьи не могут загораживать друг друга
  */
 fun whichRookThreatens(kingX: Int, kingY: Int,
-                       rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int {
-    val rook1_dang = (kingX == rookX1 || kingY == rookY1)
-    val rook2_dang = (kingX == rookX2 || kingY == rookY2)
-    if ( rook1_dang && rook2_dang ) {
-        return 3
-    } else if (rook1_dang) {
-        return 1
-    } else if (rook2_dang) {
-        return 2
-    }
-    return 0
+					   rookX1: Int, rookY1: Int,
+					   rookX2: Int, rookY2: Int): Int {
+	val rook1_dang = (kingX == rookX1 || kingY == rookY1)
+	val rook2_dang = (kingX == rookX2 || kingY == rookY2)
+	when {
+		rook1_dang && rook2_dang -> return 3
+		rook1_dang -> return 1
+		rook2_dang -> return 2
+	}
+	return 0
 }
 
 /**
@@ -113,8 +109,8 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  * Считать, что ладья и слон не могут загораживать друг друга.
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
-                          rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int = TODO()
+						  rookX: Int, rookY: Int,
+						  bishopX: Int, bishopY: Int): Int = TODO()
 
 /**
  * Простая
