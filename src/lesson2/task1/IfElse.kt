@@ -30,7 +30,7 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
 
 
 fun main(args: Array<String>) {
-	println(ageDescription(2))
+
 }
 
 
@@ -110,7 +110,16 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  */
 fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 						  rookX: Int, rookY: Int,
-						  bishopX: Int, bishopY: Int): Int = TODO()
+						  bishopX: Int, bishopY: Int): Int {
+	val rook_dang = rookX == kingX || rookY == kingY
+	val bishop_dang = Math.abs(bishopX - kingX) == Math.abs(bishopY - kingY)
+	when {
+		rook_dang && bishop_dang -> return 3
+		rook_dang -> return 1
+		bishop_dang -> return 2
+	}
+	return 0
+}
 
 /**
  * Простая
@@ -120,7 +129,45 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+	if (a + b > c && a + c > b && b + c > a) {
+		val cathet1: Double
+		val cathet2: Double
+		val hypo: Double
+		if (a < b) {
+			cathet1 = a
+			if (b < c) {
+				cathet2 = b
+				hypo = c
+			} else {
+				cathet2 = c
+				hypo = b
+			}
+		} else {
+			cathet1 = b
+			if (c < a) {
+				cathet2 = c
+				hypo = a
+			} else {
+				cathet2 = a
+				hypo = c
+			}
+		}
+		val hypoRect = hypotenuse(cathet1, cathet2)
+		when {
+			hypo < hypoRect -> return 0
+			hypo == hypoRect -> return 1
+			hypo > hypoRect -> return 2
+		}
+	}
+	return -1
+}
+
+
+fun hypotenuse(cat1: Double, cat2: Double) =
+		Math.sqrt(sqr(cat1) + sqr(cat2))
+
+fun sqr(x: Double) = x*x
 
 /**
  * Средняя
@@ -130,4 +177,21 @@ fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int = TODO()
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+	val length: Int
+	if (a < c) {
+		if (b > d) {
+			length = d - c
+		} else {
+			length = b - c
+		}
+	} else {
+		if (d > b) {
+			length = b - a
+		} else {
+			length = d - a
+		}
+	}
+	if (length < 0) return -1
+	return length
+}
