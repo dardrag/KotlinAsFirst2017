@@ -124,13 +124,8 @@ fun minDivisor(n: Int): Int {
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
 fun maxDivisor(n: Int): Int {
-	val m = n / 2
-	for (i in m downTo 2) {
-		if (n % i == 0) return i
-	}
-	return 1
+	return n / minDivisor(n)
 }
-
 /**
  * Простая
  *
@@ -167,7 +162,23 @@ fun sqr(x: Int) = x*x
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+	val num = x % (2 * Math.PI)
+	var result = num
+	var member = 1.0
+	var count = 3
+	while (member > eps) {
+		member = Math.pow(num, count.toDouble()) / factorial(count)
+		if ((count - 1) % 4 == 0) {
+			result += member
+		} else {
+			result -= member
+		}
+		count += 2
+	}
+	return result
+}
+
 
 /**
  * Средняя
