@@ -63,10 +63,10 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
 	var temp = n
 	var digitCount = 0
-	while (temp != 0)  {
+	do   {
 		temp = temp / 10
 		digitCount++
-	}
+	} while(temp != 0)
 	return digitCount
 }
 
@@ -167,7 +167,7 @@ fun sin(x: Double, eps: Double): Double {
 	var result = num
 	var member = 1.0
 	var count = 3
-	while (member > eps) {
+	while (Math.abs(member) > eps) {
 		member = Math.pow(num, count.toDouble()) / factorial(count)
 		if ((count - 1) % 4 == 0) {
 			result += member
