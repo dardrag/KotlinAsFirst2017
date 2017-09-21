@@ -41,15 +41,12 @@ fun main(args: Array<String>) {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-	var str: String
 	when {
-		age % 100 in 10..20 || age % 10 in 5..9 -> str = "лет"
-		age % 10 == 0 -> str = "лет"
-		age % 10 == 1 -> str = "год"
-		else -> str = "года"
+		age % 100 in 10..20 || age % 10 in 5..9 -> return "$age лет"
+		age % 10 == 0 -> return "$age лет"
+		age % 10 == 1 -> return "$age год"
+		else -> return "$age года"
 	}
-	str = age.toString() + " " + str
-	return str
 }
 
 /**
@@ -94,8 +91,8 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 		rook1_dang && rook2_dang -> return 3
 		rook1_dang -> return 1
 		rook2_dang -> return 2
+		else -> return 0
 	}
-	return 0
 }
 
 /**
@@ -117,8 +114,8 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 		rook_dang && bishop_dang -> return 3
 		rook_dang -> return 1
 		bishop_dang -> return 2
+		else -> return 0
 	}
-	return 0
 }
 
 /**

@@ -63,7 +63,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
 fun digitNumber(n: Int): Int {
 	var temp = n
 	var digitCount = 0
-	do   {
+	do {
 		temp = temp / 10
 		digitCount++
 	} while(temp != 0)
@@ -97,7 +97,7 @@ fun lcm(m: Int, n: Int): Int {
 	var gcd = gcd(m, n)
 	val mult1 = m / gcd
 	val mult2 = n
-	return mult1*mult2
+	return mult1 * mult2
 }
 
 fun gcd(m: Int, n: Int): Int {
@@ -111,7 +111,7 @@ fun gcd(m: Int, n: Int): Int {
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
 fun minDivisor(n: Int): Int {
-	val m = Math.sqrt(n.toDouble()).toInt() + 1
+	val m = Math.sqrt(n.toDouble()).toInt()
 	for (i in 2..m) {
 		if (n % i == 0) return i
 	}
@@ -134,8 +134,7 @@ fun maxDivisor(n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean  {
-	if (gcd(m, n) == 1) return true
-	return false
+	return gcd(m, n) == 1
 }
 
 /**
@@ -148,9 +147,7 @@ fun isCoPrime(m: Int, n: Int): Boolean  {
 fun squareBetweenExists(m: Int, n: Int): Boolean {
 	val sqrtm = Math.sqrt(m.toDouble()).toInt()
 	val sqrtn = Math.sqrt(n.toDouble()).toInt()
-	if (sqr(sqrtm) == m || sqr(sqrtn) == n) return true
-	if (sqrtn - sqrtm >= 1) return true
-	return false
+	return sqr(sqrtm) == m || sqr(sqrtn) == n || sqrtn - sqrtm >= 1
 }
 
 fun sqr(x: Int) = x*x

@@ -71,21 +71,20 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
 	val brickMiddle: Int
 	if (a < b) {
 			brickMin = a
-			if (b < c) {
-				brickMiddle = b
+			brickMiddle = if (b < c) {
+				b
 			} else {
-				brickMiddle = c
+				c
 			}
 		} else {
 			brickMin = b
-			if (c < a) {
-				brickMiddle = c
+			brickMiddle = if (c < a) {
+				c
 			} else {
-				brickMiddle = a
+				a
 			}
 		}
 	val brickWidth = minOf(brickMiddle, brickMin)
 	val brickHeight = maxOf(brickMiddle, brickMin)
-	if (brickWidth <= wallWidth && brickHeight <= wallHeight) return true
-	return false
+	return brickWidth <= wallWidth && brickHeight <= wallHeight
 }
