@@ -178,18 +178,17 @@ fun sqr(x: Double) = x*x
  * Если пересечения нет, вернуть -1.
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-	val length: Int
-	if (a < c) {
+	val length = if (a < c) {
 		if (b > d) {
-			length = d - c
+			d - c
 		} else {
-			length = b - c
+			b - c
 		}
 	} else {
 		if (d > b) {
-			length = b - a
+			b - a
 		} else {
-			length = d - a
+			d - a
 		}
 	}
 	if (length < 0) return -1
