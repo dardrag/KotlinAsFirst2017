@@ -205,7 +205,7 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
 fun factorize(n: Int): List<Int> {
     var number = n
     var primenums = mutableListOf<Int>()
-    if (number % 2 == 0) {
+    while (number % 2 == 0) {
 	    number /= 2
 	    primenums.add(2)
     }
@@ -244,6 +244,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var result = mutableListOf<Int>()
     var num = n
+    if (num == 0) result.add(0)
     while (num > 0) {
         result.add(num % base)
         num /= base
