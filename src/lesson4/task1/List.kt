@@ -268,7 +268,7 @@ fun convertToString(n: Int, base: Int): String {
 	    if (i < 10) {
             result += i.toString()
 	    } else {
-            result += (i + 87).toChar()
+            result += (i - 10 + 'a'.toInt()).toChar()
 	    }
     }
     return result
@@ -304,9 +304,9 @@ fun decimalFromString(str: String, base: Int): Int {
 	var digits = mutableListOf<Int>()
     for (i in str) {
         if (i.isDigit()) {
-            digits.add(i.toInt() - 0x30)
+            digits.add(i.toInt() - '0'.toInt())
         } else {
-            digits.add(i.toInt() - 87)
+            digits.add(i.toInt() - 'a'.toInt() + 10)
         }
     }
     return decimal(digits,base)
