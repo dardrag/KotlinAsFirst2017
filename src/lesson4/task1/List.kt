@@ -265,7 +265,7 @@ fun convertToString(n: Int, base: Int): String {
     var converted = convert(n,base)
     var result = ""
     for (i in converted) {
-	    if (i < 9) {
+	    if (i < 10) {
             result += i.toString()
 	    } else {
             result += (i + 87).toChar()
