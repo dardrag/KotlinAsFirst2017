@@ -123,9 +123,9 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-	return n / minDivisor(n)
-}
+fun maxDivisor(n: Int): Int =
+	n / minDivisor(n)
+
 /**
  * Простая
  *
@@ -133,9 +133,8 @@ fun maxDivisor(n: Int): Int {
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean  {
-	return gcd(m, n) == 1
-}
+fun isCoPrime(m: Int, n: Int): Boolean =
+	gcd(m, n) == 1
 
 /**
  * Простая
@@ -225,9 +224,8 @@ fun revert(n: Int): Int {
  * первая цифра равна последней, вторая -- предпоследней и так далее.
  * 15751 -- палиндром, 3653 -- нет.
  */
-fun isPalindrome(n: Int): Boolean {
-	return revert(n) == n
-}
+fun isPalindrome(n: Int): Boolean =
+	revert(n) == n
 
 /**
  * Средняя

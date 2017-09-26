@@ -171,7 +171,7 @@ fun times(a: List<Double>, b: List<Double>): Double {
 fun polynom(p: List<Double>, x: Double): Double {
     var sum = 0.0
     for (i in 0 until p.size) {
-        sum += p[i] * Math.pow(x,i.toDouble())
+        sum += p[i] * Math.pow(x, i.toDouble())
     }
     return sum
 }
@@ -262,16 +262,16 @@ fun convert(n: Int, base: Int): List<Int> {
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
 fun convertToString(n: Int, base: Int): String {
-    var converted = convert(n,base)
-    var result = ""
+    val converted = convert(n,base)
+    var result = StringBuilder("")
     for (i in converted) {
 	    if (i < 10) {
-            result += i.toString()
+            result.append(i)
 	    } else {
-            result += (i - 10 + 'a'.toInt()).toChar()
+            result.append('a'.plus(i - 10))
 	    }
     }
-    return result
+    return result.toString()
 }
 
 /**
@@ -301,7 +301,7 @@ fun decimal(digits: List<Int>, base: Int): Int {
  * Например: str = "13c", base = 14 -> 250
  */
 fun decimalFromString(str: String, base: Int): Int {
-	var digits = mutableListOf<Int>()
+	val digits = mutableListOf<Int>()
     for (i in str) {
         if (i.isDigit()) {
             digits.add(i.toInt() - '0'.toInt())
@@ -309,7 +309,7 @@ fun decimalFromString(str: String, base: Int): Int {
             digits.add(i.toInt() - 'a'.toInt() + 10)
         }
     }
-    return decimal(digits,base)
+    return decimal(digits, base)
 }
 
 /**

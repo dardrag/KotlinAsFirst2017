@@ -40,14 +40,14 @@ fun main(args: Array<String>) {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String {
+fun ageDescription(age: Int): String =
 	when {
-		age % 100 in 10..20 || age % 10 in 5..9 -> return "$age лет"
-		age % 10 == 0 -> return "$age лет"
-		age % 10 == 1 -> return "$age год"
-		else -> return "$age года"
+		age % 100 in 10..20 || age % 10 in 5..9 -> "$age лет"
+		age % 10 == 0 -> "$age лет"
+		age % 10 == 1 -> "$age год"
+		else -> "$age года"
 	}
-}
+
 
 /**
  * Простая
@@ -87,11 +87,11 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
 					   rookX2: Int, rookY2: Int): Int {
 	val rook1_dang = (kingX == rookX1 || kingY == rookY1)
 	val rook2_dang = (kingX == rookX2 || kingY == rookY2)
-	when {
-		rook1_dang && rook2_dang -> return 3
-		rook1_dang -> return 1
-		rook2_dang -> return 2
-		else -> return 0
+	return when {
+		rook1_dang && rook2_dang -> 3
+		rook1_dang -> 1
+		rook2_dang -> 2
+		else -> 0
 	}
 }
 
@@ -110,11 +110,11 @@ fun rookOrBishopThreatens(kingX: Int, kingY: Int,
 						  bishopX: Int, bishopY: Int): Int {
 	val rook_dang = rookX == kingX || rookY == kingY
 	val bishop_dang = Math.abs(bishopX - kingX) == Math.abs(bishopY - kingY)
-	when {
-		rook_dang && bishop_dang -> return 3
-		rook_dang -> return 1
-		bishop_dang -> return 2
-		else -> return 0
+	return when {
+		rook_dang && bishop_dang -> 3
+		rook_dang -> 1
+		bishop_dang -> 2
+		else -> 0
 	}
 }
 
@@ -151,10 +151,10 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 			}
 		}
 		val hypoRect = hypotenuse(cathet1, cathet2)
-		when {
-			hypo < hypoRect -> return 0
-			hypo == hypoRect -> return 1
-			hypo > hypoRect -> return 2
+		return when {
+			hypo < hypoRect -> 0
+			hypo > hypoRect -> 2
+			else -> 1
 		}
 	}
 	return -1
@@ -174,20 +174,18 @@ fun sqr(x: Double) = x*x
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-	val length = if (a < c) {
-		if (b > d) {
-			d - c
-		} else {
-			b - c
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int =
+	if (a < c) {
+		when {
+			b < c -> -1
+			b > d -> d - c
+			else -> b - c
 		}
 	} else {
-		if (d > b) {
-			b - a
-		} else {
-			d - a
+		when {
+			d < a -> -1
+			d > b -> b - a
+			else -> d - a
 		}
 	}
-	if (length < 0) return -1
-	return length
-}
+
