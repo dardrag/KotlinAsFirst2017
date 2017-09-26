@@ -320,7 +320,19 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var num = n
+    var romestr = StringBuilder("")
+    val romedig = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val numbers = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    for (i in 0 until numbers.size) {
+        while (num >= numbers[i]) {
+            romestr.append(romedig[i])
+            num -= numbers[i]
+        }
+    }
+    return romestr.toString()
+}
 
 /**
  * Очень сложная
@@ -329,4 +341,87 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    val thousand = n / 1000
+    val hundr = n % 1000
+    var rusnum = StringBuilder("")
+    rusnum.append(hundreds(thousand))
+    rusnum.append(decim(thousand))
+    if (thousand % 100 < 11 || thousand % 100 > 19) rusnum.append(thUnits(thousand))
+	rusnum.append(rusThousand(thousand))
+    rusnum.append(hundreds(hundr))
+	rusnum.append(decim(hundr))
+    if (hundr % 100 < 11 || hundr % 100 > 19) rusnum.append(units(hundr))
+	return rusnum.trim().toString()
+}
+fun units(n: Int): String =
+    when(n % 10) {
+        1 -> "один"
+        2 -> "два"
+        3 -> "три"
+        4 -> "четыре"
+        5 -> "пять"
+        6 -> "шесть"
+        7 -> "семь"
+        8 -> "восемь"
+        9 -> "девять"
+        else -> ""
+}
+fun rusThousand(n: Int) =
+     when {
+         n == 0 -> ""
+         (n % 100 in 10..20 || n % 10 in 5..9 || n % 10 == 0) -> "тысяч "
+         (n % 10 == 1) -> "тысяча "
+         else -> "тысячи "
+     }
+
+fun thUnits(n: Int): String =
+    when(n % 10) {
+        1 -> "одна "
+        2 -> "две "
+        3 -> "три "
+        4 -> "четыре "
+        5 -> "пять "
+        6 -> "шесть "
+        7 -> "семь "
+        8 -> "восемь "
+        9 -> "девять "
+        else -> ""
+    }
+fun hundreds(n: Int): String =
+    when(n / 100) {
+        1 -> "сто "
+        2 -> "двести "
+        3 -> "триста "
+        4 -> "четыреста "
+        5 -> "пятьсот "
+        6 -> "шестьсот "
+        7 -> "семьсот "
+        8 -> "восемьсот "
+        9 -> "девятьсот "
+        else -> ""
+    }
+fun decim(n: Int): String =
+    when(n % 100 / 10) {
+        1 -> when(n % 10) {
+            1 -> "одиннадцать "
+            2 -> "двенадцать "
+            3 -> "тринадцать "
+            4 -> "четырнадцать "
+            5 -> "пятнадцать "
+            6 -> "шестнадцать "
+            7 -> "семнадцать "
+            8 -> "восемнадцать "
+            9 -> "девятнадцать "
+	        else -> "десять "
+        }
+        2 -> "двадцать "
+        3 -> "тридцать "
+        4 -> "сорок "
+        5 -> "пятьдесят "
+        6 -> "шестьдесят "
+        7 -> "семьдесят "
+        8 -> "восемьдесят "
+        9 -> "девяносто "
+        else -> ""
+    }
