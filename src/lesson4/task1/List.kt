@@ -244,7 +244,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var result = mutableListOf<Int>()
     var num = n
-    if (num == 0) result.add(0)
+    if (num == 0) return listOf(0)
     while (num > 0) {
         result.add(num % base)
         num /= base
@@ -304,9 +304,9 @@ fun decimalFromString(str: String, base: Int): Int {
 	val digits = mutableListOf<Int>()
     for (i in str) {
         if (i.isDigit()) {
-            digits.add(i.toInt() - '0'.toInt())
+            digits.add(i.minus('0'))
         } else {
-            digits.add(i.toInt() - 'a'.toInt() + 10)
+            digits.add(i.minus('a') + 10)
         }
     }
     return decimal(digits, base)
@@ -344,7 +344,7 @@ fun roman(n: Int): String {
 fun russian(n: Int): String {
     val thousand = n / 1000
     val hundr = n % 1000
-    var rusnum = StringBuilder("")
+    var rusnum = StringBuilder()
     rusnum.append(hundreds(thousand))
     rusnum.append(decim(thousand))
     if (thousand % 100 < 11 || thousand % 100 > 19) rusnum.append(thUnits(thousand))
