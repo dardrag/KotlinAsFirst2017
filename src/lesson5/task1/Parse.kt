@@ -57,6 +57,13 @@ fun main(args: Array<String>) {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
+fun isNumber(str: String): Boolean {
+    if (str == "") return false
+    for (i in str) {
+        if (!i.isDigit()) return false
+    }
+    return true
+}
 
 /**
  * Средняя
@@ -69,9 +76,7 @@ fun main(args: Array<String>) {
 fun dateStrToDigit(str: String): String {
     val date = str.split(" ")
 	if (date.size != 3) return ""
-    for (i in date[0]) {
-        if (!i.isDigit()) return ""
-    }
+	if (!isNumber(date[0])) return ""
     val month = when(date[1]) {
         "января" -> "01"
         "февраля" -> "02"
@@ -88,9 +93,7 @@ fun dateStrToDigit(str: String): String {
         else -> ""
     }
 	if (month == "") return ""
-    for (i in date[2]) {
-        if (!i.isDigit()) return ""
-    }
+    if (!isNumber(date[2])) return ""
     return twoDigitStr(date[0].toInt()) + "." + month + "." + date[2]
 }
 
@@ -101,7 +104,30 @@ fun dateStrToDigit(str: String): String {
  * Перевести её в строковый формат вида "15 июля 2016".
  * При неверном формате входной строки вернуть пустую строку
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+	val date = digital.split(".")
+    if (date.size != 3) return ""
+    for (i in date) {
+        if (!isNumber(i)) return ""
+    }
+    val month = when (date[1]) {
+        "01" -> "января"
+        "02" -> "февраля"
+        "03" -> "марта"
+        "04" -> "апреля"
+        "05" -> "мая"
+        "06" -> "июня"
+        "07" -> "июля"
+        "08" -> "августа"
+        "09" -> "сентября"
+        "10" -> "октября"
+        "11" -> "ноября"
+        "12" -> "декабря"
+        else -> ""
+    }
+	if (month == "") return ""
+    return date[0].toInt().toString() + " " + month + " " + date[2]
+}
 
 /**
  * Средняя
