@@ -169,11 +169,12 @@ fun flattenPhoneNumber(phone: String): String {
 fun bestLongJump(jumps: String): Int {
     if (jumps.isEmpty()) return -1
     val listJumps = jumps.split(" ")
-    val symbols = setOf("-", "%", " ")
-    var maxJump = -1
+    val symbols = setOf("-", "%")
+    var maxJump = -1.toInt()
     for (i in listJumps) {
-        if (!(isNumber(i) || symbols.contains(i))) return -1
-        if (isNumber(i)) maxJump = maxOf(maxJump, i.toInt())
+        val jump = i.trim()
+        if (!(isNumber(jump) || symbols.contains(jump))) return -1
+        if (isNumber(jump)) maxJump = maxOf(maxJump, jump.toInt())
     }
     return maxJump
 }
@@ -301,7 +302,7 @@ fun isDouble(num: String): Boolean {
         if (!(i.isDigit() || (i == '.' && !containDot))) return false
         if (i == '.') containDot = true
     }
-	return containDot
+	return true
 }
 /**
  * Сложная
