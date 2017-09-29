@@ -168,9 +168,9 @@ fun flattenPhoneNumber(phone: String): String {
  */
 fun bestLongJump(jumps: String): Int {
     if (jumps.isEmpty()) return -1
-    val listJumps = jumps.split(" ")
+    val listJumps = jumps.split(Regex(" +"))
     val symbols = setOf("-", "%")
-    var maxJump = -1.toInt()
+    var maxJump = -1
     for (i in listJumps) {
         val jump = i.trim()
         if (!(isNumber(jump) || symbols.contains(jump))) return -1
@@ -279,7 +279,7 @@ fun firstDuplicateIndex(str: String): Int {
 fun mostExpensive(description: String): String {
 	if (description.isEmpty()) return ""
     val productList = description.split("; ")
-    var maxPrice = 0.0
+    var maxPrice = -1.0
     var maxPriceName = ""
     for (product in productList) {
         val productInfo = product.split(" ")
@@ -396,9 +396,16 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
 
 fun checkSyntax(commands: String) {
     val symbols = setOf('+', '-', '<', '>', '[', ']', ' ')
+    var deep = 0
     for (command in commands) {
         if (!symbols.contains(command)) throw IllegalArgumentException("")
+        when(command) {
+            '[' -> deep++
+            ']' -> deep--
+        }
+        if (deep < 0) throw IllegalArgumentException("")
     }
+    if (deep != 0) throw IllegalArgumentException("")
 }
 
 fun nextBrace(commands: String, pos: Int): Int {
