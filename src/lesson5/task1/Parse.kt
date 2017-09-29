@@ -370,6 +370,7 @@ fun fromRoman(roman: String): Int {
  *
  */
 fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
+    checkSyntax(commands)
     var i = 0
     val exception = IllegalStateException("")
     var conveyor = MutableList(cells, { 0 })
@@ -393,11 +394,16 @@ fun computeDeviceCells(cells: Int, commands: String, limit: Int): List<Int> {
     return conveyor
 }
 
+fun checkSyntax(commands: String) {
+    val symbols = setOf('+', '-', '<', '>', '[', ']', ' ')
+    for (command in commands) {
+        if (!symbols.contains(command)) throw IllegalArgumentException("")
+    }
+}
+
 fun nextBrace(commands: String, pos: Int): Int {
     var deep = 1
-    val symbols = setOf('+', '>', '<', '-', '[', ']', ' ')
 	for (i in (pos + 1) until commands.length) {
-        if (!symbols.contains(commands[i])) throw IllegalArgumentException("")
         if (commands[i] == '[') deep++
         if (commands[i] == ']') {
             if (deep == 1) return i
