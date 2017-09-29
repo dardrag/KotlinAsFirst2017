@@ -205,18 +205,14 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
 fun factorize(n: Int): List<Int> {
     var number = n
     var primenums = mutableListOf<Int>()
-    while (number % 2 == 0) {
-	    number /= 2
-	    primenums.add(2)
-    }
-	var num = 3
+	var num = 2
 	val maxnum = Math.sqrt(n.toDouble()).toInt()
 	while (number > 1) {
         if (number % num == 0) {
             number /= num
             primenums.add(num)
         } else {
-            num += 2
+            num += 1
 	        if (num > maxnum && n == number){
                 primenums.add(n)
                 break
@@ -263,7 +259,7 @@ fun convert(n: Int, base: Int): List<Int> {
  */
 fun convertToString(n: Int, base: Int): String {
     val converted = convert(n,base)
-    var result = StringBuilder("")
+    var result = StringBuilder()
     for (i in converted) {
 	    if (i < 10) {
             result.append(i)
