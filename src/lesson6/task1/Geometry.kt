@@ -245,16 +245,12 @@ fun minContainingCircle(vararg points: Point): Circle {
     val diam = diameter(*points)
     val diamCenter = Point((diam.end.x - diam.begin.x) / 2 + diam.begin.x,
             (diam.end.y - diam.begin.y) / 2 + diam.begin.y)
-    val diamLength = segmentLength(diam)
     val maxDistance = maxDistancePoint(diamCenter, *points)
-	return if (diamCenter.distance(maxDistance) > diamLength / 2)
-        circleByThreePoints(diam.begin, diam.end, maxDistance)
-    else
+    return if (maxDistance == diam.begin || maxDistance == diam.end)
         circleByDiameter(diam)
+    else
+        circleByThreePoints(diam.begin, diam.end, maxDistance)
 }
-
-fun segmentLength(seg: Segment): Double =
-        Math.sqrt(sqr(seg.end.x - seg.begin.x) + sqr(seg.end.y - seg.begin.y))
 
 fun maxDistancePoint(p: Point, vararg points: Point): Point {
     var max = -1.0
