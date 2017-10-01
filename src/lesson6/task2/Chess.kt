@@ -202,8 +202,10 @@ fun colNeg(p: Square, column: Int): Int =
  * Пример: kingMoveNumber(Square(3, 1), Square(6, 3)) = 3.
  * Король может последовательно пройти через клетки (4, 2) и (5, 2) к клетке (6, 3).
  */
-fun kingMoveNumber(start: Square, end: Square): Int =
-		maxOf(abs(end.column - start.column), abs(end.row - start.row))
+fun kingMoveNumber(start: Square, end: Square): Int {
+	if (!(start.inside() && end.inside())) throw IllegalArgumentException("")
+	return maxOf(abs(end.column - start.column), abs(end.row - start.row))
+}
 
 /**
  * Сложная
