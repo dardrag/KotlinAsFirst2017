@@ -126,7 +126,7 @@ fun mean(list: List<Double>): Double {
     for (i in list) {
         sum += i
     }
-	return sum / list.size.toDouble()
+	return sum / list.size
 }
 
 /**
@@ -187,10 +187,10 @@ fun polynom(p: List<Double>, x: Double): Double {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Double>): MutableList<Double> {
-    var sumprev = 0.0
+    var sumPrev = 0.0
 	for (i in 0 until list.size) {
-        list[i] += sumprev
-        sumprev = list[i]
+        list[i] += sumPrev
+        sumPrev = list[i]
 	}
     return list
 }
@@ -204,22 +204,22 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
  */
 fun factorize(n: Int): List<Int> {
     var number = n
-    var primenums = mutableListOf<Int>()
+    var primeNums = mutableListOf<Int>()
 	var num = 2
 	val maxnum = Math.sqrt(n.toDouble()).toInt()
 	while (number > 1) {
         if (number % num == 0) {
             number /= num
-            primenums.add(num)
+            primeNums.add(num)
         } else {
             num += 1
 	        if (num > maxnum && n == number){
-                primenums.add(n)
+                primeNums.add(n)
                 break
 	        }
         }
 	}
-    return primenums
+    return primeNums
 }
 
 /**
@@ -245,8 +245,7 @@ fun convert(n: Int, base: Int): List<Int> {
         result.add(num % base)
         num /= base
     }
-	result.reverse()
-    return result
+    return result.reversed()
 }
 
 /**
@@ -318,7 +317,7 @@ fun decimalFromString(str: String, base: Int): Int {
  */
 fun roman(n: Int): String {
     var num = n
-    var romestr = StringBuilder("")
+    var romestr = StringBuilder()
     val romedig = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     val numbers = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     for (i in 0 until numbers.size) {
