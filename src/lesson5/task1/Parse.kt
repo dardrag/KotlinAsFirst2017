@@ -142,8 +142,8 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    if (phone.isEmpty()) return ""
     val trPhone = StringBuilder(phone.trim())
+    if (trPhone.isEmpty()) return ""
     var result = StringBuilder()
     if (trPhone[0] == '+') {
         if (trPhone.length == 1) return ""
@@ -318,6 +318,7 @@ fun isDouble(num: String): Boolean {
  * Вернуть -1, если roman не является корректным римским числом
  */
 fun fromRoman(roman: String): Int {
+    if (roman.isEmpty()) return -1
     val romans = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     val arab = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     var number = StringBuilder(roman)
