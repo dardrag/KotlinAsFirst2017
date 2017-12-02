@@ -152,8 +152,8 @@ class Line private constructor(val b: Double, val angle: Double) {
      */
     fun crossPoint(other: Line): Point {
         val crossX = (b / Math.cos(angle) - (other.b / Math.cos(other.angle))) / (Math.tan(other.angle) - Math.tan(angle))
-	    val nonZero = if (angle == Math.PI / 2) Line(other.b, other.angle) else Line(b, angle)
-        val crossY = (crossX * Math.sin(nonZero.angle) + nonZero.b) / Math.cos(nonZero.angle)
+	    val minAngle = if (Math.abs(Math.PI / 2 - angle) > Math.abs(Math.PI / 2 - other.angle)) Line(other.b, other.angle) else Line(b, angle)
+        val crossY = (crossX * Math.sin(minAngle.angle) + minAngle.b) / Math.cos(minAngle.angle)
         return Point(crossX, crossY)
     }
 
@@ -173,7 +173,7 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = Line(s.begin, Math.atan((s.end.y - s.begin.y) / (s.end.x - s.begin.x)))
+fun lineBySegment(s: Segment): Line = Line(s.begin, Math.acos((s.end.y - s.begin.y) / (Math.sqrt(sqr(s.end.x - s.begin.x)) + sqr(s.end.y - s.begin.y))))
 
 /**
  * Средняя
