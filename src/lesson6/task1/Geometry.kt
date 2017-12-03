@@ -152,7 +152,7 @@ class Line private constructor(val b: Double, val angle: Double) {
      */
     fun crossPoint(other: Line): Point {
         val crossX = (b / Math.cos(angle) - (other.b / Math.cos(other.angle))) / (Math.tan(other.angle) - Math.tan(angle))
-	    val minAngle = if (Math.abs(Math.PI / 2 - angle) > Math.abs(Math.PI / 2 - other.angle)) Line(other.b, other.angle) else Line(b, angle)
+	    val minAngle = if (Math.abs(Math.PI / 2 - angle) < Math.abs(Math.PI / 2 - other.angle)) Line(other.b, other.angle) else Line(b, angle)
         val crossY = (crossX * Math.sin(minAngle.angle) + minAngle.b) / Math.cos(minAngle.angle)
         return Point(crossX, crossY)
     }
@@ -173,14 +173,15 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line = Line(s.begin, Math.acos((s.end.y - s.begin.y) / (Math.sqrt(sqr(s.end.x - s.begin.x)) + sqr(s.end.y - s.begin.y))))
+fun lineBySegment(s: Segment): Line =
+        Line(s.begin, Math.acos((s.end.x - s.begin.x) / Math.sqrt(sqr(s.end.x - s.begin.x) + sqr(s.end.y - s.begin.y))))
 
 /**
  * Средняя
  *
  * Построить прямую по двум точкам
  */
-fun lineByPoints(a: Point, b: Point): Line = Line(a, Math.atan((b.y - a.y) / (b.x - a.x)))
+fun lineByPoints(a: Point, b: Point): Line = lineBySegment(Segment(a, b))
 
 /**
  * Сложная
@@ -189,7 +190,10 @@ fun lineByPoints(a: Point, b: Point): Line = Line(a, Math.atan((b.y - a.y) / (b.
  */
 fun bisectorByPoints(a: Point, b: Point): Line {
     val center = Point((b.x - a.x) / 2 + a.x, (b.y - a.y) / 2 + a.y)
-    return Line(center, Math.atan(((b.y - a.y) / (b.x - a.x))) + Math.PI / 2)
+    val cathet = if (b.y > a.y) b.x - a.x else a.x - b.x
+    var angle = Math.acos(cathet / Math.sqrt(sqr(b.y - a.y) + sqr(b.x - a.x)))
+    angle = if (angle < Math.PI / 2) angle + Math.PI / 2 else angle - Math.PI / 2
+    return Line(center, angle)
 }
 
 /**
@@ -201,16 +205,16 @@ fun bisectorByPoints(a: Point, b: Point): Line {
 fun findNearestCirclePair(vararg circles: Circle): Pair<Circle, Circle> {
     if (circles.size < 2) throw IllegalArgumentException("")
     var minDistance = circles[0].distance(circles[1])
-    var nearstCircle = Pair(circles[0], circles[1])
+    var nearestCircle = Pair(circles[0], circles[1])
     for (i in 0 until circles.size - 1) {
         for (j in i + 1 until circles.size) {
             if (circles[i].distance(circles[j]) < minDistance) {
-                nearstCircle = Pair(circles[i], circles[j])
+                nearestCircle = Pair(circles[i], circles[j])
                 minDistance = circles[i].distance((circles[j]))
             }
         }
     }
-    return nearstCircle
+    return nearestCircle
 }
 
 /**
@@ -246,14 +250,25 @@ fun minContainingCircle(vararg points: Point): Circle {
     val diam = diameter(*points)
     val diamCenter = Point((diam.end.x - diam.begin.x) / 2 + diam.begin.x,
             (diam.end.y - diam.begin.y) / 2 + diam.begin.y)
-    val maxDistance = maxDistancePoint(diamCenter, *points)
-    return if (maxDistance == diam.begin || maxDistance == diam.end)
-        circleByDiameter(diam)
-    else
-        circleByThreePoints(diam.begin, diam.end, maxDistance)
+    var maxDistance = maxDistancePoint(diamCenter, *points)
+    var circle = circleByDiameter(diam)
+    var circlePoints = mutableListOf(diam.begin, diam.end)
+    while (maxDistance.distance(circle.center) > circle.radius) {
+        circlePoints.add(maxDistance)
+        if (circlePoints.size > 3) {
+            var mPoint = circlePoints[0]
+            var min = circlePoints[0].distance(maxDistance)
+            for (p in circlePoints) {
+                if (p.distance(maxDistance) < min) mPoint = p
+            }
+            circlePoints.remove(mPoint)
+        }
+        circle = circleByThreePoints(circlePoints[0], circlePoints[1], circlePoints[2])
+    }
+    return circle
 }
 
-fun maxDistancePoint(p: Point, vararg points: Point): Point {
+fun maxDistancePoint(p: Point,vararg points: Point): Point {
     var max = -1.0
     var maxPoint = p
     for (point in points) {
