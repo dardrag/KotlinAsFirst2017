@@ -319,5 +319,44 @@ fun knightMoveNumber(start: Square, end: Square): Int {
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
 fun knightTrajectory(start: Square, end: Square): List<Square> {
-	return TODO()
+	if (!start.inside() || !end.inside()) throw IllegalArgumentException()
+    var path = mutableListOf(end)
+	return trajectory(path, start)
+}
+
+fun trajectory(path: MutableList<Square>, start: Square): List<Square> {
+	val end = path[0]
+	val moves = arrayOf(
+			Square(-2, -1),
+			Square(-2, 1),
+			Square(-1, -2),
+			Square(-1, 2),
+			Square(1, -2),
+			Square(1, 2),
+			Square(2, -1),
+			Square(2, 1))
+	var pos = Array(9, { Array(9, { 0 }) })
+	pos[start.column][start.row] = 1
+	var nodes = mutableListOf<Square>()
+	var parentNodes = mutableListOf(start)
+	while (!parentNodes.contains(end)) {
+		for (node in parentNodes) {
+			for (move in moves) {
+				val temp = Square(node.column + move.column, node.row + move.row)
+				if (temp.column in 1..8 && temp.row in 1..8 && pos[temp.column][temp.row] == 0){
+					nodes.add(temp)
+					pos[temp.column][temp.row] = 1
+				}
+                if (temp == end){
+					path.add(0, node)
+					break
+				}
+			}
+			if (nodes.contains(end)) break
+		}
+		parentNodes.clear()
+		parentNodes.addAll(nodes)
+		nodes.clear()
+	}
+	return if (path[0] == start) path else trajectory(path, start)
 }
