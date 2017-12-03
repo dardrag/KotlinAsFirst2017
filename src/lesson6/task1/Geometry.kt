@@ -173,8 +173,11 @@ class Line private constructor(val b: Double, val angle: Double) {
  *
  * Построить прямую по отрезку
  */
-fun lineBySegment(s: Segment): Line =
-        Line(s.begin, Math.acos((s.end.x - s.begin.x) / Math.sqrt(sqr(s.end.x - s.begin.x) + sqr(s.end.y - s.begin.y))))
+fun lineBySegment(s: Segment): Line {
+    var cathet = if (s.end.y > s.begin.y) s.end.x - s.begin.x else s.begin.x - s.end.x
+    if (s.end.y == s.begin.y) cathet = Math.abs(cathet)
+    return Line(s.begin, Math.acos(cathet / Math.sqrt(sqr(s.end.x - s.begin.x) + sqr(s.end.y - s.begin.y))))
+}
 
 /**
  * Средняя
@@ -253,7 +256,7 @@ fun minContainingCircle(vararg points: Point): Circle {
     var maxDistance = maxDistancePoint(diamCenter, *points)
     var circle = circleByDiameter(diam)
     var circlePoints = mutableListOf(diam.begin, diam.end)
-    while (maxDistance.distance(circle.center) > circle.radius) {
+    while (!circlePoints.contains(maxDistance)) {
         if (circlePoints.size == 3) {
             var mPoint = circlePoints[0]
             var min = circlePoints[0].distance(maxDistance)
