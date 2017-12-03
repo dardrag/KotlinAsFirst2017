@@ -254,8 +254,7 @@ fun minContainingCircle(vararg points: Point): Circle {
     var circle = circleByDiameter(diam)
     var circlePoints = mutableListOf(diam.begin, diam.end)
     while (maxDistance.distance(circle.center) > circle.radius) {
-        circlePoints.add(maxDistance)
-        if (circlePoints.size > 3) {
+        if (circlePoints.size == 3) {
             var mPoint = circlePoints[0]
             var min = circlePoints[0].distance(maxDistance)
             for (p in circlePoints) {
@@ -263,6 +262,7 @@ fun minContainingCircle(vararg points: Point): Circle {
             }
             circlePoints.remove(mPoint)
         }
+        circlePoints.add(maxDistance)
         circle = circleByThreePoints(circlePoints[0], circlePoints[1], circlePoints[2])
     }
     return circle
