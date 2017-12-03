@@ -264,6 +264,7 @@ fun minContainingCircle(vararg points: Point): Circle {
         }
         circlePoints.add(maxDistance)
         circle = circleByThreePoints(circlePoints[0], circlePoints[1], circlePoints[2])
+        maxDistance = maxDistancePoint(circle.center, *points)
     }
     return circle
 }
