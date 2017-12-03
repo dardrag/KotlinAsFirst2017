@@ -282,7 +282,10 @@ fun knightMoveNumber(start: Square, end: Square): Int {
 		for (node in parentNodes) {
 			for (move in moves) {
 				val temp = Square(node.column + move.column, node.row + move.row)
-				if (temp.column in 1..8 && temp.row in 1..8) nodes.add(temp)
+				if (temp.column in 1..8 && temp.row in 1..8 && pos[temp.column][temp.row] == 0){
+					nodes.add(temp)
+					pos[temp.column][temp.row] = 1
+				}
                 if (temp == end) break
 			}
 			if (nodes.contains(end)) break
@@ -315,4 +318,6 @@ fun knightMoveNumber(start: Square, end: Square): Int {
  *
  * Если возможно несколько вариантов самой быстрой траектории, вернуть любой из них.
  */
-fun knightTrajectory(start: Square, end: Square): List<Square> = TODO()
+fun knightTrajectory(start: Square, end: Square): List<Square> {
+	return TODO()
+}
