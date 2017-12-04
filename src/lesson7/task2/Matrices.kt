@@ -1,6 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER")
 package lesson7.task2
 
+import lesson7.task1.Cell
 import lesson7.task1.Matrix
 import lesson7.task1.createMatrix
 
@@ -59,7 +60,56 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  * 10 11 12  5
  *  9  8  7  6
  */
-fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateSpiral(height: Int, width: Int): Matrix<Int> {
+    if (width == 0 || height == 0) return createMatrix(0, 0, 0)
+    val matrix = createMatrix(height, width, 0)
+    var direction = 1
+    var cell = Cell(0, 0)
+    var nextCell: Cell
+    matrix[0, 0] = 1
+    var number = 2
+    while (true) {
+        nextCell = nextElement(cell.row, cell.column, matrix, direction)
+           if (!cellCheck(nextCell, matrix)) {
+               direction = chDirection(direction)
+               nextCell = nextElement(cell.row, cell.column, matrix, direction)
+               if (!cellCheck(nextCell, matrix)) break
+        }
+        cell = nextCell
+        matrix[cell.row, cell.column] = number
+        number++
+    }
+    return matrix
+}
+
+fun cellCheck(nextCell: Cell, matrix: Matrix<Int>): Boolean =
+            nextCell.row in 0 until matrix.height &&
+            nextCell.column in 0 until matrix.width &&
+            matrix[nextCell.row, nextCell.column] == 0
+
+
+fun nextElement(row: Int, column: Int, matrix: Matrix<Int>, direction: Int): Cell {
+    var nextCell: Cell
+    when (direction) {
+        1 -> nextCell = Cell(row, column + 1)
+        2 -> nextCell = Cell(row + 1, column)
+        3 -> nextCell = Cell(row, column - 1)
+        4 -> nextCell = Cell(row - 1, column)
+        else -> nextCell = Cell(0, 0)
+    }
+
+    return nextCell
+}
+
+fun chDirection(direction: Int): Int {
+    return when(direction) {
+        1 -> 2
+        2 -> 3
+        3 -> 4
+        4 -> 1
+        else -> 0
+    }
+}
 
 /**
  * Сложная
@@ -75,7 +125,19 @@ fun generateSpiral(height: Int, width: Int): Matrix<Int> = TODO()
  *  1  2  2  2  2  1
  *  1  1  1  1  1  1
  */
-fun generateRectangles(height: Int, width: Int): Matrix<Int> = TODO()
+fun generateRectangles(height: Int, width: Int): Matrix<Int> {
+    val matrix = createMatrix(height, width, 1)
+    var value = 2
+    while (height / 2 + height % 2 >= value) {
+        for (i in value - 1..height - value) {
+            for (j in value - 1..width - value) {
+                matrix[i, j] = value
+            }
+        }
+        value++
+    }
+    return matrix
+}
 
 /**
  * Сложная
