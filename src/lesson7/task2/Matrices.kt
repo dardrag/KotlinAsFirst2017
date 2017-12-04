@@ -61,7 +61,6 @@ operator fun Matrix<Int>.plus(other: Matrix<Int>): Matrix<Int> {
  *  9  8  7  6
  */
 fun generateSpiral(height: Int, width: Int): Matrix<Int> {
-    if (width == 0 || height == 0) return createMatrix(0, 0, 0)
     val matrix = createMatrix(height, width, 0)
     var direction = 1
     var cell = Cell(0, 0)
